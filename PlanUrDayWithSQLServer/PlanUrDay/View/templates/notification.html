@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block body %}
+		<p> Welcome back {{session['firstname']}}!</p>
+		<div name = "notification">
+		<form action="{{url_for('addNotification')}}" method="post">
+		{{ form.hidden_tag() }}
+		<p>Message</p>
+		{{ form.message }}
+		<div id="select-container">
+		</div><br/>
+		<div id="select-container2">
+		</div><br/>
+		
+		
+		<p>Repeat</p>
+		{{ form.repeat(value='true') }}
+		<p>Enable</p>
+		{{ form.enable }}
+		<input type="text" name = "datetime123" id = "datetime123" style = "opacity:0"/>
+		<p>{{ form.submitNotification }}</p>
+		</form>
+		</div>
+		
+<script type="text/javascript">
+
+function dateYearGenerate() {
+   var date = new Date(), dateYearArray = new Array(), i;
+   curYear = date.getFullYear();
+    for(i = 0; i<5; i++) {
+        dateYearArray[i] = curYear+i;
+    }
+    return dateYearArray;
+}
+
+function addSelect(divname) {
+   var newDiv=document.createElement('div');
+	newDiv.id = 'dateDiv';
+   var html = 'Year : <select id = "yearList" onchange="addDays()">', year = dateYearGenerate(), i;
+   for(i = 0; i < year.length; i++) {
+       html += "<option value='"+year[i]+"'>"+year[i]+"</option>";
+   }
+   html += '</select>';
+	html += ' Month :  <select id = "monthList" onchange="addDays()">';
+	var j;
+   for(j = 1; j < 13; j++) {
+       html += "<option value='"+j+"'>"+j+"</option>";
+   }
+     html += '</select>';
+   
+   newDiv.innerHTML= html;
+   document.getElementById(divname).appendChild(newDiv);
+}
+function addDays() {
+	
+	elem = document.getElementById("dayDivNew");
+	if(elem){
+		buildDateTime();
+		 elem.parentNode.removeChild(elem);
+	}
+	var temp = document.getElementById("yearList");
+	
+	var year = (temp.options[temp.selectedIndex]).text;
+	
+	var temp2 = document.getElementById("monthList");
+	var month = (temp2.options[temp2.selectedIndex]).text;
+	
+	var monthStart = new Date(year, month - 1, 1);
+	var monthEnd = new Date(year, month, 1);
+	var monthLength = ((monthEnd - monthStart)/(1000 * 60 * 60 * 24)) ;
+	var newDiv=document.createElement('div');
+	 newDiv.id = 'dayDivNew';
+	var i;
+	var html = 'Day: <select id = "daysList" onchange = "buildDateTime()">';
+	for(i = 1; i <= monthLength; i++){
+		 html += "<option value='"+i+"'>"+i+"</option>";
+		
+	}
+	html += '</select>';
+	 newDiv.innerHTML = html;
+	 document.getElementById("dateDiv").appendChild(newDiv);
+}
+
+
+function addTime(divname){
+	var newDiv=document.createElement('div');
+	newDiv.id = 'timeDiv';
+   var html = 'Hours : <select id = "hrList" onchange = "buildDateTime()">', i;
+   for(i = 1; i < 24; i++) {
+       html += "<option value='"+i+"'>"+i+"</option>";
+   }
+   html += '</select>';
+   html += ' Minutes : <select id = "minList" onchange="buildDateTime()">'
+    for(i = 0; i < 60; i++) {
+       html += "<option value='"+i+"'>"+i+"</option>";
+   }
+    html += '</select>';
+   
+   newDiv.innerHTML= html;
+   document.getElementById(divname).appendChild(newDiv);
+
+}
+
+function buildDateTime(){
+	var year = ((document.getElementById("yearList")).options[(document.getElementById("yearList")).selectedIndex]).text;
+	var month = ((document.getElementById("monthList")).options[(document.getElementById("monthList")).selectedIndex]).text;
+	var day = ((document.getElementById("daysList")).options[(document.getElementById("daysList")).selectedIndex]).text;
+	var hour = ((document.getElementById("hrList")).options[(document.getElementById("hrList")).selectedIndex]).text;
+	var min = ((document.getElementById("minList")).options[(document.getElementById("minList")).selectedIndex]).text;
+	
+	var dateTime = year + '-' + month + '-' + day + ' ' + hour + ':' + min;
+	document.getElementById("datetime123").value = dateTime;
+	
+}
+
+addSelect('select-container');
+addDays();
+addTime('select-container2')
+buildDateTime();
+		</script>
+{% endblock %}

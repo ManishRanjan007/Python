@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+	<h1>Welcome!</h1>
+	{% if 'username' in session %}
+		<p> Welcome back {{session['firstname']}}!</p>
+		<form action="" method="post">
+		{{ form.hidden_tag() }}
+		{{form.logoutBTN }}
+			<!--input type="submit" name="logout" value="logout"/-->
+		</form>
+	{% else %}
+		<p> A login is required </p>
+		<form action="{{url_for('login')}}" method="post">
+		{{ form.hidden_tag() }}
+			<p>Mobile Number:<br />
+			{{form.username }}
+			<!--input type="text" name="username"/--></p>
+			<p>Password:<br />
+			{{form.password }}
+			<!--input type="password" name="password"/--></p>
+			{{form.loginBTN }}
+			<a href = "{{url_for('signUp')}}"> Sign Up </a>
+			<!--input type="submit" value="login" name="login"/--></p>
+		</form>
+		
+	{% endif %}
+{% endblock %}

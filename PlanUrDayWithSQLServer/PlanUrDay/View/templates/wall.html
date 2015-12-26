@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+		<p> Welcome back {{session['firstname']}}!</p>
+		<div name = "wall">
+			{% if notifications %}
+			<table >
+			<tr>
+			<th>Message</th>
+			<th>Mobile Number</th>
+			<th>Time</th>
+			<th>Enable</th>			
+			<th>Repeat</th>
+			</tr>
+			{% for notification in notifications%}
+			<tr>
+			<td>{{notification['message']}}</td>
+			
+			<td>{{notification['mobileNo']}}</td>
+			<td>{{notification['time']}}</td>
+			<td>{{notification['enable']}}</td>
+			<td>{{notification['repeat']}}</td>
+			</tr>
+			
+		{% endfor %}
+		</table>
+		{% else %}
+		<p>No Notifications</p>
+		{% endif %}
+		</div>
+{% endblock %}

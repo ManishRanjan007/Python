@@ -1,0 +1,60 @@
+USE [PlanUrDay]
+GO
+
+/****** Object:  Table [dbo].[Notification]    Script Date: 15-11-2015 22:15:51 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Notification](
+	[Id] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[Mobile_No_FK] [numeric](10, 0) NOT NULL,
+	[Message] [nvarchar](200) NOT NULL,
+	[Time] [datetime] NOT NULL,
+	[Repeat] [char](10) NOT NULL,
+	[Enable] [char](10) NOT NULL,
+ CONSTRAINT [PK_Notification] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+USE [PlanUrDay]
+GO
+
+/****** Object:  Table [dbo].[User_Info]    Script Date: 15-11-2015 22:16:27 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[User_Info](
+	[UserID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[First_Name] [nvarchar](50) NOT NULL,
+	[Last_Name] [nvarchar](50) NOT NULL,
+	[Mobile_Number] [numeric](10, 0) NOT NULL,
+	[DOB] [date] NOT NULL,
+	[EmailID] [nvarchar](100) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[Notification_Table] [nvarchar](100) NULL,
+ CONSTRAINT [pk_MobileNo] PRIMARY KEY CLUSTERED 
+(
+	[Mobile_Number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
